@@ -4,8 +4,15 @@ import { User } from '../models/user/user.model';
 import { UserProfile } from '../models/user/user.profile.model';
 import { getAuthToken } from '../router/routers/token.auth.router';
 import { logger } from '../utils/logger';
+import bcrypt from 'bcrypt';
 
 export class UserController {
+    private static storeAuthToken(response: express.Response, username: string){
+        const tokenData = getAuthToken(username);
+        const auth =`Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+        response.setHeader('Set-Cookie',[auth]);
+        return;
+    }
     public static async create(request: express.Request, response: express.Response): Promise<void> {
         response.type('json');
         const errors = validationResult(request);
@@ -20,12 +27,11 @@ export class UserController {
             logger.error('[Login] %s ', JSON.stringify(errors.array()));
             response.status(400).send(JSON.stringify(errors.array()));
             return;
-        } 
+        }
         const bodyProperty = (param: string): string => {
             return request.body[param] as string;
         };
         const email = bodyProperty('email');
-        const password = bodyProperty('password');
         const name = bodyProperty('name');
         const gender = bodyProperty('gender');
         const emailFree = !(await UserController.isEmailExists(email));
@@ -34,15 +40,16 @@ export class UserController {
             response.status(400).send({ error: '' });
         } else {
             try {
-                const usr_payload = { email: email, password: password, salt: 's' };
-                logger.info('User payload: %s',JSON.stringify(usr_payload));
+                const usr_payload = { email: email, password: bodyProperty('password'), isAdmin:email=='ankit@ankit.org'};
+                logger.info('User payload: %s', JSON.stringify(usr_payload));
                 const user = await User.create(usr_payload);
-                const profile_payload={ profileId: user.id, name: name, gender: gender };
+                const profile_payload = { profileId: user.id, name: name, gender: gender };
                 logger.info('User Profile: %s', JSON.stringify(user));
-                
-                logger.info('Profile payload: %s',JSON.stringify(profile_payload));
+                logger.info('Profile payload: %s', JSON.stringify(profile_payload));
+                UserController.storeAuthToken(response, email);
                 await UserProfile.create(profile_payload);
-                response.setHeader('Authorization', getAuthToken(email).token);
+                user.password = undefined;
+
                 response.status(200).send(JSON.stringify(user));
             }
             catch (error) {
@@ -72,13 +79,17 @@ export class UserController {
             if (user) {
                 logger.info('[Login Success]: User: %s', JSON.stringify(user));
                 //set auth token
-                response.setHeader('Authorization', getAuthToken(email).token);
+                UserController.storeAuthToken(response,email);
                 response.status(200).send(JSON.stringify(user));
             } else {
                 logger.error('[Login Failed] for email id: [%s] ', email);
                 response.status(400).send({ error: 'Invalid Credentials' });
             }
         }
+        return;
+    }
+    public static async logout(request: express.Request, response: express.Response): Promise<void> {
+
         return;
     }
     private static async isEmailExists(email: string): Promise<boolean> {
@@ -95,14 +106,20 @@ export class UserController {
         }
     }
     private static async getUser(email: string, password: string): Promise<User | undefined> {
-        const user = await User.findAll({
+        const user = await User.findOne({
             where: {
-                email: email,
-                password: password,
+                email: email
             }
         });
-        if (user && user.length != 0) {
-            return user[0];
+        logger.info('Found user for [%s] : %s',email, JSON.stringify(user));
+        if (user) {
+            const userPassword = user.password as string;
+            const isPasswordMatching =  await bcrypt.compare(password, userPassword);
+            logger.info('[COMPARE PSWD] %s',isPasswordMatching);
+            if (isPasswordMatching) {
+                user.password = undefined;
+                return user;
+            }
         }
         return;
     }
