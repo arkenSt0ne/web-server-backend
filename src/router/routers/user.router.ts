@@ -17,8 +17,8 @@ class RegisterRouter implements RegisterableRouters {
      * register
      */
     public register(app: Application):void {
-        const passwordStrength = 'Password must contain at least one uppercase , one lowercase , one number and one special character ';
-        const pattern = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$';
+        // const passwordStrength = 'Password must contain at least one uppercase , one lowercase , one number and one special character ';
+        // const pattern = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$';
 
         app.route('/signup')
         .post(
