@@ -2,8 +2,8 @@ import {Optional} from 'sequelize';
 export interface UserAttributes {
     id?: string;
     email: string;
-    password: string;
-    salt:string;
+    password?: string;
+    isAdmin?:boolean;
     passwordResetToken?: string;
     passwordResetExpires?: Date;
     facebook?: string;
