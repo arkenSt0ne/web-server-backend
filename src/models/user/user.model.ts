@@ -6,8 +6,8 @@ import { UserToken } from './user.token.model';
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
     public id!: string;
     public email!: string;
-    public password!: string;
-    public salt!:string;
+    public password?: string;
+    public isAdmin!:boolean;
     public passwordResetToken!: string;
     public passwordResetExpires!: Date;
     public facebook!: string;
@@ -38,8 +38,8 @@ function InitUser(sequelize: Sequelize) : void {
             type: DataTypes.STRING,
             allowNull:false,
         },
-        salt:{
-            type: DataTypes.STRING,
+        isAdmin:{
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
         passwordResetToken:{
