@@ -2,6 +2,7 @@ import { Application } from 'express';
 import { body } from 'express-validator';
 import { UserController } from '../../controllers/user.controller';
 import authMiddleWare from '../../middlewares/auth.middleware';
+import { hashPassword } from '../../middlewares/hashPassword.middleware';
 import {RegisterableRouters} from '../../models/router.model';
 class SomeRouter implements RegisterableRouters{
     public  register(app:Application): void {
@@ -27,6 +28,7 @@ class RegisterRouter implements RegisterableRouters {
             // body('password',passwordStrength).matches(pattern),
             body('name','Name should not be blank').isLength({min:1, max: 40}),
             body('gender','Gender should not be blank').isLength({min:1, max: 10}),
+            hashPassword,
             UserController.create
             );
         app.route('/login')
