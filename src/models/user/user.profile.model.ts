@@ -2,6 +2,7 @@ import { DataTypes, Model, Sequelize } from 'sequelize';
 import { UserProfileAttributes, UserProfileCreationAttributes } from '../../interfaces/table/profile.interface';
 
 export class UserProfile extends Model<UserProfileAttributes, UserProfileCreationAttributes> implements UserProfileAttributes {
+    public id!: string;
     public profileId!: string;
     public name!: string;
     public gender!: string;
@@ -14,10 +15,13 @@ export class UserProfile extends Model<UserProfileAttributes, UserProfileCreatio
 function InitUserProfile(sequelize: Sequelize): void {
     UserProfile.init(
         {
-            profileId: {
+            id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
+            },
+            profileId: {
+                type: DataTypes.UUID,
             },
             name: {
                 type: DataTypes.STRING(40),

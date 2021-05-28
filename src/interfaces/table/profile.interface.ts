@@ -1,6 +1,7 @@
 import { Optional } from 'sequelize';
 
 export interface UserProfileAttributes {
+    id: string;
     profileId:string;
     name: string;
     gender: string;
