@@ -7,6 +7,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     public id!: string;
     public email!: string;
     public password!: string;
+    public salt!:string;
     public passwordResetToken!: string;
     public passwordResetExpires!: Date;
     public facebook!: string;
@@ -37,6 +38,10 @@ function InitUser(sequelize: Sequelize) : void {
             type: DataTypes.STRING,
             allowNull:false,
         },
+        salt:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         passwordResetToken:{
             type: DataTypes.STRING,
             allowNull:true,
@@ -52,10 +57,6 @@ function InitUser(sequelize: Sequelize) : void {
         facebook : {
             type:DataTypes.STRING,
             allowNull:true,
-        },
-        profileId: {
-            type: DataTypes.UUID,
-            allowNull: false,
         },
 
     },

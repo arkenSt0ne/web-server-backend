@@ -22,6 +22,7 @@ function InitUserProfile(sequelize: Sequelize): void {
             },
             profileId: {
                 type: DataTypes.UUID,
+                allowNull:false,
             },
             name: {
                 type: DataTypes.STRING(40),
