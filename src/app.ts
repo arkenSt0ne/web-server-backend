@@ -1,4 +1,3 @@
-console.log('App.ts');
 import * as dotenvFlow from 'dotenv-flow';
 import express from 'express';
 import { logger,RegisterLogger } from './utils/logger';
