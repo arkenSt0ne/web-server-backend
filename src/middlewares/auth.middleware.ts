@@ -5,7 +5,7 @@ import CustomException from '../exceptions/custom.exception';
 import { DataStoredInToken } from '../interfaces/tokenData.interface';
 import { logger } from '../utils/logger';
 
-async function authMiddleWare(req: express.Request, res: express.Response, next: express.NextFunction) {
+async function authMiddleWare(req: express.Request, res: express.Response, next: express.NextFunction):Promise<void> {
     const header = req.headers;
     if(header && header.authorization){
         const secret = process.env['JWT_SECRET']||'';
