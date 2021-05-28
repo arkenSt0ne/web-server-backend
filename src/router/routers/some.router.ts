@@ -1,10 +1,12 @@
 import { Application } from 'express';
+import authMiddleWare from '../../middlewares/auth.middleware';
 import {RegisterableRouters} from '../../models/router.model';
 class SomeRouter implements RegisterableRouters{
     public  register(app:Application): void {
         app.route('/someRoute')
-        .get((req,res)=>{
-            res.send('visiting SomeRoute');
+        .get(authMiddleWare,(req,res)=>{
+            res.type('json');
+            res.send({'res':'visiting someRoute'});
         });
     }
 }
