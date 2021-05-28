@@ -1,4 +1,3 @@
-import { profile } from 'console';
 import express from 'express';
 import { ValidationError, validationResult } from 'express-validator';
 import { User } from '../models/user/user.model';
