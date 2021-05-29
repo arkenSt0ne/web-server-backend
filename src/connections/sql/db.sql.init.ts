@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
-import { DB_INIT } from '../interfaces/db.init.interface';
-import { SQL_DB_CONFIG, getDBConfig } from '../configs/db.sql';
+import { DB_INIT } from '../../interfaces/db.init.interface';
+import { SQL_DB_CONFIG, getDBConfig } from '../../configs/db.sql';
 import pino from 'pino';
 export default class SQL_DB implements DB_INIT {
     private sequelize!: Sequelize;

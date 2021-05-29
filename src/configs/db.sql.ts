@@ -1,3 +1,6 @@
+import pino from 'pino';
+import { logger } from '../utils/logger';
+
 type Dialect = 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql';
 
 export interface SQL_DB_CONFIG {
@@ -7,6 +10,7 @@ export interface SQL_DB_CONFIG {
     password: string,
     dialect: Dialect,
     database: string,
+    logging?:(sql: string, timing?: number) => void,
     toString():string
 }
 export const getDBConfig = (): SQL_DB_CONFIG | undefined => {
@@ -18,7 +22,8 @@ export const getDBConfig = (): SQL_DB_CONFIG | undefined => {
             username:process.env['DB_USERNAME']||'',
             password:process.env['DB_PASSWORD']||'',
             database:process.env['DB_NAME']||'',
-            dialect: (process.env['DB_DIALECT']||'') as Dialect
+            dialect: (process.env['DB_DIALECT']||'') as Dialect,
+            logging: (msg:string) => logger.info('[Sequelize] %s',msg ),
         };
         ret.toString = ():string => {
             return JSON.stringify(ret);

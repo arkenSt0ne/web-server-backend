@@ -1,4 +1,5 @@
-console.log('server.ts');
+console.clear();
+console.log('*********** WEB SERVER **********');
 import errorHandler from 'errorhandler';
 import app from './app';
 import { Router } from './router';
