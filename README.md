@@ -21,6 +21,9 @@ To build and run this app locally you will need a few things:
 
 # Getting started
 - Clone the repository
+```
+git clone https://github.com/arkenSt0ne/web-server-backend.git
+```
 - Install dependencies
 ```
 cd <project_name>
