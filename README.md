@@ -3,11 +3,6 @@
 The main purpose of this repository is to show a working Node.js API Server  and workflow for writing Node code in TypeScript.
 
 It is not a goal to be a comprehensive and definitive guide to making a TypeScript and Node project, but as a working reference maintained by the community. If you are interested in starting a new TypeScript project - check out the bootstrapping tools reference in [the TypeScript Website](https://www.typescriptlang.org/docs/home.html)
-
-
-<!-- [![Dependency Status](https://david-dm.org/Microsoft/TypeScript-Node-Starter.svg)](https://david-dm.org/Microsoft/TypeScript-Node-Starter) [![Build Status](https://travis-ci.org/Microsoft/TypeScript-Node-Starter.svg?branch=master)](https://travis-ci.org/Microsoft/TypeScript-Node-Starter)
- -->
-
 # Table of contents:
 
 - [Pre-reqs](#pre-reqs)
@@ -22,7 +17,7 @@ To build and run this app locally you will need a few things:
 # Getting started
 - Clone the repository
 ```
-git clone https://github.com/arkenSt0ne/web-server-backend.git
+git clone --depth=1 https://github.com/arkenSt0ne/web-server-backend.git <project-name>
 ```
 - Install dependencies
 ```
