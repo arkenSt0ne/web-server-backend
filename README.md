@@ -28,9 +28,13 @@ npm install
 ```
 npm run localhost
 ```
+- To list the logs using  `pino-pretty`
+```
+tail -f -n 10 <project-working-dir>/logs/log.log | pino-pretty
+```
 <!-- Or, if you're using VS Code, you can use `cmd + shift + b` to run the default build task (which is mapped to `npm run build`), and then you can use the command palette (`cmd + shift + p`) and select `Tasks: Run Task` > `npm: start` to run `npm start` for you. -->
 
 > **Note on editors!** - TypeScript has great support in [every editor](http://www.typescriptlang.org/index.html#download-links), but this project has been pre-configured for use with [VS Code](https://code.visualstudio.com/).
 Throughout the README We will try to call out specific places where VS Code really shines or where this project has been set up to take advantage of specific features.
 
-Finally, navigate to `http://localhost:8080` and you should see the template being served and rendered locally!
+Finally, The backend-server is hosted at `http://localhost:8080`
